@@ -17,6 +17,8 @@
 #!/bin/sh
 set -e
 
+pip freeze
+
 echo "🎸 migrate"
 python manage.py migrate
 

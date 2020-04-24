@@ -1,4 +1,5 @@
-Django==3.0.4
+Django==2.2.12
+./python-spanner-django
 django-environ
 gunicorn
 pyyaml
@@ -7,3 +8,5 @@ requests
 psycopg2-binary
 django-storages[google]
 google-cloud-secret-manager==0.1.1
+
+grpcio-gcp

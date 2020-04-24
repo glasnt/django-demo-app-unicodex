@@ -17,7 +17,7 @@
 import os
 import environ
 
-mandatory_settings = ["DATABASE_URL","SECRET_KEY"]
+mandatory_settings = ["SECRET_KEY"] #["DATABASE_URL","SECRET_KEY"]
 optional_settings = ["GS_BUCKET_NAME"]
 
 # If our mandatory settings aren't all already defined as environment variables
@@ -126,7 +126,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "unicodex.wsgi.application"
 
-DATABASES = {"default": env.db()}
+#DATABASES = {"default": env.db()}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django_spanner',
+        'PROJECT': 'django-demo-app-spanner',
+        'INSTANCE': 'django-spanner',
+        'NAME': 'unicodex',
+    }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
