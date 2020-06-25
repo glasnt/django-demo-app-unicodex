@@ -17,8 +17,6 @@
 import os
 import environ
 
-from djangae.settings_base import *
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 env_file = os.path.join(BASE_DIR,  ".env")
 
@@ -77,8 +75,8 @@ if "localhost" not in ALLOWED_HOSTS:
 # Application definition
 
 INSTALLED_APPS = [
-    "djangae",
-    "djangae.contrib.security",
+    'gcloud',
+    'gcloudc.commands',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -89,7 +87,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "djangae.contrib.security.middleware.AppEngineSecurityMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -140,7 +137,7 @@ WSGI_APPLICATION = "unicodex.wsgi.application"
 #DATABASES = {"default": env.db()}
 DATABASES = {
     'default': {
-        'ENGINE': 'djangae.db.backends.appengine'
+        'ENGINE': 'gcloudc.db.backends.datastore'
     }
 }
 

@@ -7,4 +7,6 @@ requests
 psycopg2-binary
 django-storages[google]
 google-cloud-secret-manager==0.1.1
-djangae
+
+#-e git://gitlab.com/potato-oss/google-cloud/django-gcloud-connectors.git#egg=django-gcloud-connectors
+./django-gcloud-connectors
