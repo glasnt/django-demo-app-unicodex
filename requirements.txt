@@ -7,3 +7,4 @@ requests
 psycopg2-binary
 django-storages[google]
 google-cloud-secret-manager==0.1.1
+djangae

@@ -32,8 +32,6 @@ gcloud services enable \
   run.googleapis.com \
   iam.googleapis.com \
   compute.googleapis.com \
-  sql-component.googleapis.com \
-  sqladmin.googleapis.com \
   cloudbuild.googleapis.com \
   cloudkms.googleapis.com \
   cloudresourcemanager.googleapis.com \
@@ -63,29 +61,6 @@ quiet gcloud iam service-accounts add-iam-policy-binding ${CLOUDRUN_SA} \
   --role "roles/iam.serviceAccountUser"
 stepdone
 
-stepdo "Create SQL Instance (this will take a minute)"
-export ROOT_PASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 64 | head -n 1)
-gcloud sql instances create $INSTANCE_NAME \
-  --database-version POSTGRES_11 \
-  --tier db-f1-micro  \
-  --region $REGION \
-  --project $PROJECT_ID \
-  --root-password $ROOT_PASSWORD
-export DATABASE_INSTANCE=$PROJECT_ID:$REGION:$INSTANCE_NAME
-stepdone
-
-stepdo "Create SQL Database and User"
-export DATABASE_NAME=unicodex
-gcloud sql databases create $DATABASE_NAME \
-  --instance=$INSTANCE_NAME
-export DBUSERNAME=unicodex-django
-export DBPASSWORD=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 40 | head -n 1)
-gcloud sql users create $DBUSERNAME \
-  --password $DBPASSWORD \
-  --instance $INSTANCE_NAME
-export DATABASE_URL=postgres://$DBUSERNAME:${DBPASSWORD}@//cloudsql/$PROJECT_ID:$REGION:$INSTANCE_NAME/$DATABASE_NAME
-stepdone
-
 stepdo "Create Storage bucket"
 export GS_BUCKET_NAME=${PROJECT_ID}-media
 gsutil mb -l ${REGION} gs://${GS_BUCKET_NAME}
@@ -95,7 +70,6 @@ gsutil iam ch \
 stepdone
 
 stepdo "Creating Django settings secret, and allowing service access"
-echo DATABASE_URL=\"${DATABASE_URL}\" > .env
 echo GS_BUCKET_NAME=\"${GS_BUCKET_NAME}\" >> .env
 echo SECRET_KEY=\"$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 50 | head -n 1)\" >> .env
 gcloud secrets create django_settings --replication-policy automatic

@@ -30,8 +30,14 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
-    execute_from_command_line(sys.argv)
-
+    from djangae.sandbox import start_emulators, stop_emulators
+    try:
+        # Start all emulators, persisting data if we're not testing
+        start_emulators(persist_data="test" not in sys.argv)
+        execute_from_command_line(sys.argv)
+    finally:
+        # Stop all emulators
+        stop_emulators()
 
 if __name__ == "__main__":
     main()
