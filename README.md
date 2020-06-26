@@ -4,7 +4,7 @@ Unicodex is a demo database-backed serverless Django application, that uses:
 
  * [Django 3.0](https://docs.djangoproject.com/en/3.0/) as the web framework,
  * [Google Cloud Run](https://cloud.google.com/run/) as the hosting platform,
- * [Google Cloud SQL](https://cloud.google.com/sql/) as the managed database (via [django-environ](https://django-environ.readthedocs.io/en/latest/)), 
+ * 🆕 [Google Datastore](https://cloud.google.com/datastore/) as the database,
  * [Google Cloud Storage](https://cloud.google.com/storage/) as the media storage platform (via [django-storages](https://django-storages.readthedocs.io/en/latest/)),
  * [Google Cloud Build](https://cloud.google.com/cloud-build/) for build and deployment automation, and
  * [Google Secret Manager](https://cloud.google.com/secret-manager/) for managing encrypted values.

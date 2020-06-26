@@ -1,7 +1,7 @@
-Django==3.0.7
+Django==2.2.13
 django-environ
 gunicorn
-pyyaml
+pyyaml==5.1.1
 bs4
 requests
 psycopg2-binary
