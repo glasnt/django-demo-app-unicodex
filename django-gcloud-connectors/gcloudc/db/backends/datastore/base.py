@@ -63,8 +63,10 @@ class Connection(object):
         self.gclient = datastore.Client(
             namespace=wrapper.namespace,
             project=params["PROJECT"],
+            #credentials=params["CREDENTIALS"],
             # avoid a bug in the google client - it tries to authenticate even when the emulator is enabled
             # see https://github.com/googleapis/google-cloud-python/issues/5738
+           # _http=None #requests.Session if os.environ.get(environment_vars.GCD_HOST) else None,
             _http=requests.Session if os.environ.get(environment_vars.GCD_HOST) else None,
         )
 

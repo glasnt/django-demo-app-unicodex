@@ -34,7 +34,10 @@ if not os.path.isfile('.env'):
 
         with open(env_file, "w") as f:
             f.write(payload)
-
+# hack
+import google.auth
+_, project = google.auth.default()
+# endhack
 env = environ.Env()
 env.read_env(env_file)
 
@@ -75,8 +78,7 @@ if "localhost" not in ALLOWED_HOSTS:
 # Application definition
 
 INSTALLED_APPS = [
-    'gcloud',
-    'gcloudc.commands',
+    'gcloudc',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -105,6 +107,7 @@ if GS_BUCKET_NAME:
     GS_DEFAULT_ACL = "publicRead"
 
     INSTALLED_APPS += ["storages"]
+    STATIC_URL = STATIC_ROOT
 
 else:
     DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
@@ -133,11 +136,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "unicodex.wsgi.application"
+GENERATE_SPECIAL_INDEXES = True
 
 #DATABASES = {"default": env.db()}
 DATABASES = {
     'default': {
-        'ENGINE': 'gcloudc.db.backends.datastore'
+        'ENGINE': 'gcloudc.db.backends.datastore',
+        'PROJECT': project,
+        'INDEXES_FILE': "djangaeidx.yaml",
+        "NAMESPACE": "ns2",
     }
 }
 

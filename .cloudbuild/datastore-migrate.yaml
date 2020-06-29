@@ -1,0 +1,33 @@
+# Image should already be in GCR, so pull it down then use it.
+steps:
+    - id: 'build  '
+      name: 'gcr.io/cloud-builders/docker'
+      args: ['build', '-t', 'gcr.io/${PROJECT_ID}/${_SERVICE}', '.']
+
+    - id: 'push   '
+      name: 'gcr.io/cloud-builders/docker'
+      args: ['push', 'gcr.io/${PROJECT_ID}/${_SERVICE}']
+
+      #    - id: 'migrate'
+      #name: 'gcr.io/${PROJECT_ID}/${_SERVICE}'
+      #args: ['python','manage.py','migrate']
+
+      #    - id: 'loaddata'
+      #name: 'gcr.io/${PROJECT_ID}/${_SERVICE}'
+      #args: ['python','manage.py','loaddata', 'sampledata']
+
+      #- id: 'collectstatic'
+      #name: 'gcr.io/${PROJECT_ID}/${_SERVICE}'
+      #args: ['python','manage.py', 'collectstatic', '--noinput']
+
+    - id: 'migrate'
+      name: 'gcr.io/${PROJECT_ID}/${_SERVICE}'
+      args: ['sh', '.cloudbuild/django_migrate.sh']
+
+    - id: 'deploy '
+      name: 'gcr.io/cloud-builders/gcloud'
+      args: ["run", "deploy", "${_SERVICE}",
+            "--platform", "managed",
+            "--region", "${_REGION}",
+            "--image", "gcr.io/$PROJECT_ID/${_SERVICE}"]
+

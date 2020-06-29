@@ -1,0 +1,31 @@
+indexes: 
+- kind: django_migrations
+  properties:
+  - name: app
+  - name: name
+- kind: auth_permission
+  properties:
+  - name: content_type_id
+  - name: codename
+- kind: django_admin_log
+  properties:
+  - name: user_id
+  - name: action_time
+    direction: desc
+- kind: unicodex_codepoint
+  properties:
+  - name: __key__
+    direction: desc
+- kind: unicodex_design
+  properties:
+  - name: __key__
+    direction: desc
+- kind: unicodex_vendor
+  properties:
+  - name: __key__
+    direction: desc
+- kind: unicodex_vendorversion
+  properties:
+  - name: __key__
+    direction: desc
+  - name: iexact
