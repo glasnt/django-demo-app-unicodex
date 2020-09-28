@@ -8,4 +8,4 @@ steps:
       args: ['-i', 'gcr.io/${PROJECT_ID}/${_SERVICE}',
              '-s', '${PROJECT_ID}:${_REGION}:${_INSTANCE_NAME}',
              '-e', 'PROJECT_ID=${PROJECT_ID}',
-             '--', 'sh', '.cloudbuild/django_migrate.sh']
+             '--', 'sh', '.cloudbuild/deploy/django_migrate.sh']
